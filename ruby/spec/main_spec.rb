@@ -15,6 +15,21 @@ describe 'Inventory' do
     expect(updated_item.price).to eq(19)
   end
 
+  it 'reduces price twice as quickly for flowers items' do
+    updated_item = add_item_and_update_price('Flowers', 10, 20)
+    expect(updated_item.price).to eq(18)
+  end
+
+  it 'reduces price four times as fast for flowers past sell_by' do
+    updated_item = add_item_and_update_price('Flowers', -1, 20)
+    expect(updated_item.price).to eq(16)
+  end
+
+  it 'does not allow price to go negative for flowers' do
+    updated_item = add_item_and_update_price('Flowers', 10, 0)
+    expect(updated_item.price).to eq(0)
+  end
+
   it 'reduces price twice as fast for normal items past sell_by' do
     updated_item = add_item_and_update_price('Normal Item', -1, 20)
     expect(updated_item.price).to eq(18)
